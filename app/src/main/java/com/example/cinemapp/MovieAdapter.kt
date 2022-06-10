@@ -8,7 +8,9 @@ import com.example.cinemapp.databinding.ItemMovieBinding
 import com.example.cinemapp.models.Movie
 import com.squareup.picasso.Picasso
 
-class MovieAdapter(val movies:List<Movie>): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(val homeListener: HomeListener): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+
+    var movies = ArrayList<Movie>()
 
     inner class MovieViewHolder(view: View): RecyclerView.ViewHolder(view){
 
@@ -29,8 +31,19 @@ class MovieAdapter(val movies:List<Movie>): RecyclerView.Adapter<MovieAdapter.Mo
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val item = movies[position]
         holder.bind(item)
+        holder.itemView.setOnClickListener {
+            homeListener.onMovieClicked()
+
+        }
     }
 
     override fun getItemCount(): Int = movies.size
+
+
+    fun updateData(data: List<Movie>) {
+        movies.clear()
+        movies.addAll(data)
+        notifyDataSetChanged()
+    }
 
 }

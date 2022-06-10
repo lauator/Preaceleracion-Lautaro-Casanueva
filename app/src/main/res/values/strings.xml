@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CinemApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="genero">Genre:</string>
+    <string name="idioma">Original Language:</string>
+    <string name="popularidad">Popularity:</string>
+    <string name="estreno">Release Date:</string>
+
 </resources>
