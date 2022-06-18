@@ -1,16 +1,28 @@
 package com.example.cinemapp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.example.cinemapp.databinding.FragmentDetailDialogBinding
+
+
+
+import com.example.cinemapp.viewmodel.DetailViewModel
+import com.squareup.picasso.Picasso
 
 
 class DetailDialogFragment : DialogFragment() {
 
-    //TODO tiene que ocupar toda la pantalla
+
+    private val detailViewModel: DetailViewModel by viewModels()
+    private var _binding: FragmentDetailDialogBinding? = null
+    private val binding get() = _binding!!
+    val texto = "Esto es detaildialogfragment"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +35,42 @@ class DetailDialogFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_dialog, container, false)
+        _binding = FragmentDetailDialogBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val id = arguments?.getSerializable("id") as Int
+
+        detailViewModel.getDetailMovie(id)
+
+        binding.apply {
+            viewModel = detailViewModel
+            lifecycleOwner = viewLifecycleOwner
+            detailFragment = this@DetailDialogFragment
+
+        }
+
+
+
+        detailViewModel.image.observe(viewLifecycleOwner, Observer<String>{ image ->
+
+            if(image.isNotEmpty()){
+                Picasso.get().load(image).into(binding.ivMovie)
+            }
+
+        })
+
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+
     }
 
 

@@ -2,9 +2,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".DetailDialogFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.cinemapp.viewmodel.DetailViewModel" />
+        <variable
+            name="detailFragment"
+            type="com.example.cinemapp.DetailDialogFragment" />
+
+
+    </data>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,7 +45,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivMovie"
-                tools:text="Fantastic Beasts: The Secrets of Dumbledore" />
+                tools:text="Fantastic Beasts: The Secrets of Dumbledore"
+                android:text="@{viewModel.title}"
+                />
 
             <TextView
                 android:id="@+id/tvGenre"
@@ -46,7 +57,9 @@
                 android:textSize="18sp"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                android:text="@{@string/genre(viewModel.genre)}"
+                />
 
             <TextView
                 android:id="@+id/tvLanguage"
@@ -57,6 +70,7 @@
 
                 app:layout_constraintTop_toBottomOf="@+id/tvGenre"
                 app:layout_constraintStart_toStartOf="parent"
+                android:text="@{@string/language(viewModel.language)}"
 
                 />
 
@@ -69,6 +83,7 @@
 
                 app:layout_constraintTop_toBottomOf="@+id/tvLanguage"
                 app:layout_constraintStart_toStartOf="parent"
+                android:text="@{@string/popularity(viewModel.popularity)}"
 
                 />
 
@@ -81,6 +96,7 @@
 
                 app:layout_constraintTop_toBottomOf="@+id/tvPopularity"
                 app:layout_constraintStart_toStartOf="parent"
+                android:text="@{@string/release(viewModel.release)}"
 
                 />
 
@@ -93,6 +109,7 @@
 
                 app:layout_constraintTop_toBottomOf="@+id/tvRelease"
                 app:layout_constraintStart_toStartOf="parent"
+                android:text="@{@string/overview(viewModel.overview)}"
 
                 />
 

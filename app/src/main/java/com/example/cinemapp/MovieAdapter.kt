@@ -32,7 +32,7 @@ class MovieAdapter(val homeListener: HomeListener): RecyclerView.Adapter<MovieAd
         val item = movies[position]
         holder.bind(item)
         holder.itemView.setOnClickListener {
-            homeListener.onMovieClicked()
+            homeListener.onMovieClicked(item.id)
 
         }
     }

@@ -1,5 +1,5 @@
 package com.example.cinemapp
 
 interface HomeListener {
-    fun onMovieClicked()
+    fun onMovieClicked(id: Int)
 }
