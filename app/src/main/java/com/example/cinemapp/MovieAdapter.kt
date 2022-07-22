@@ -20,6 +20,8 @@ class MovieAdapter(val homeListener: HomeListener): RecyclerView.Adapter<MovieAd
             val query = "https://image.tmdb.org/t/p/original/${movie.poster_path}"
             Picasso.get().load(query).into(binding.ivMovie)
             binding.tvTitle.text = movie.title
+
+
         }
     }
 
@@ -41,7 +43,7 @@ class MovieAdapter(val homeListener: HomeListener): RecyclerView.Adapter<MovieAd
 
 
     fun updateData(data: List<Movie>) {
-        movies.clear()
+
         movies.addAll(data)
         notifyDataSetChanged()
     }

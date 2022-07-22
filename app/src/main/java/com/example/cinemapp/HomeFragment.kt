@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemapp.databinding.FragmentHomeBinding
 import com.example.cinemapp.models.Movie
 import com.example.cinemapp.models.MovieResponse
@@ -26,6 +27,7 @@ class HomeFragment : Fragment(), HomeListener {
     private val binding get() = _binding!!
     private lateinit var movieAdapter: MovieAdapter
     private val viewModel: HomeViewModel by viewModels()
+    var page = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +46,7 @@ class HomeFragment : Fragment(), HomeListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.refresh()
+        viewModel.getPopularMovies(1)
 
         movieAdapter = MovieAdapter(this)
 
@@ -56,17 +58,42 @@ class HomeFragment : Fragment(), HomeListener {
 
         }
 
+
+        //paginacion
+        binding.rvMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val totalItemCount = layoutManager?.itemCount
+                val lastVisible = layoutManager.findLastCompletelyVisibleItemPosition()
+
+                val endHasBeenReached = lastVisible + 5 >= totalItemCount
+                if (totalItemCount > 0 && endHasBeenReached) {
+                    page += 1
+                    viewModel.getPopularMovies(page)
+                }
+            }
+        })
+
+
         observeViewModel()
+
+        
+
+
+
+
     }
 
-    fun observeViewModel(){
-        viewModel.listMovie.observe(viewLifecycleOwner, Observer<List<Movie>>{ movies ->
+    fun observeViewModel() {
+        viewModel.listMovie.observe(viewLifecycleOwner, Observer<List<Movie>> { movies ->
             movieAdapter.updateData(movies)
         })
 
+
+
+
     }
-
-
 
     override fun onMovieClicked(id: Int) {
         val bundle = bundleOf("id" to id)
@@ -74,4 +101,14 @@ class HomeFragment : Fragment(), HomeListener {
     }
 
 
+
+
 }
+
+
+
+
+
+
+
+

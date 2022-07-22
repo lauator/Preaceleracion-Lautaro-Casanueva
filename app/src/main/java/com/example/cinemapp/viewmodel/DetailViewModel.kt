@@ -1,14 +1,18 @@
 package com.example.cinemapp.viewmodel
 
+
 import android.util.Log
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cinemapp.APIService
+import com.example.cinemapp.R
 import com.example.cinemapp.RetrofitMovie
 import com.example.cinemapp.models.Genre
 
 import com.example.cinemapp.models.MovieDetail
+import kotlinx.coroutines.CoroutineExceptionHandler
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,11 +42,13 @@ class DetailViewModel : ViewModel() {
     private val _overview = MutableLiveData<String>("")
     val overview: LiveData<String> = _overview
 
-
+    val coroutineExceptionHandler = CoroutineExceptionHandler{_, throwable ->
+        throwable.printStackTrace()
+    }
 
 
     fun getDetailMovie(id: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO + coroutineExceptionHandler).launch {
             val call: Response<MovieDetail> =
                 RetrofitMovie.getRetrofit().create(APIService::class.java)
                     .getDetailsOfMovie("https://api.themoviedb.org/3/movie/$id?api_key=64447ce8fb6641bd74e3c4e5ddda6697&language=en-US")
@@ -52,7 +58,9 @@ class DetailViewModel : ViewModel() {
 
             if (call.isSuccessful) {
 
-                _title.postValue(response?.title.toString())
+
+
+                _title.postValue(response?.title)
                 _image.postValue("https://image.tmdb.org/t/p/original${response?.poster_path}")
                 _language.postValue(response?.original_language)
                 _popularity.postValue(response?.popularity)
@@ -60,15 +68,13 @@ class DetailViewModel : ViewModel() {
                 _overview.postValue(response?.overview)
 
 
-
-
                 val genresList: List<Genre> = response?.genres ?: emptyList()
                 var genres = ""
 
                 for (element in genresList) {
-                    genres += if(genresList.last().equals(element)){
+                    genres += if (genresList.last().equals(element)) {
                         "$element"
-                    }else{
+                    } else {
                         "${element}, "
                     }
 
@@ -76,6 +82,8 @@ class DetailViewModel : ViewModel() {
 
 
                 _genre.postValue(genres)
+
+
 
             }
 

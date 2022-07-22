@@ -22,7 +22,7 @@ class DetailDialogFragment : DialogFragment() {
     private val detailViewModel: DetailViewModel by viewModels()
     private var _binding: FragmentDetailDialogBinding? = null
     private val binding get() = _binding!!
-    val texto = "Esto es detaildialogfragment"
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +62,14 @@ class DetailDialogFragment : DialogFragment() {
 
         })
 
+        if(detailViewModel.title.value == null){
+            binding.tvTitle.text = "There was an error while trying to connect the API, please review your connection to Internet and try again"
+        }
+
+        if(detailViewModel.title.value != null && detailViewModel.overview.value == null){
+            binding.tvOverview.text = "There is not overview for this movie"
+        }
+
 
 
     }
@@ -69,7 +77,6 @@ class DetailDialogFragment : DialogFragment() {
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-
 
     }
 
