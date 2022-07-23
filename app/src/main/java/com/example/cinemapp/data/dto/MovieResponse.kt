@@ -1,6 +1,7 @@
-package com.example.cinemapp.models
+package com.example.cinemapp.data.dto
 
+import com.example.cinemapp.data.dto.Movie
 import com.google.gson.annotations.SerializedName
 
-//TODO la variable results
+
 data class MovieResponse(@SerializedName("results") var results : ArrayList<Movie>)

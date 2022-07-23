@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.cinemapp.HomeFragment"
+        android:name="com.example.cinemapp.views.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -17,7 +17,7 @@
 
     <dialog
         android:id="@+id/detailDialogFragment"
-        android:name="com.example.cinemapp.DetailDialogFragment"
+        android:name="com.example.cinemapp.views.detail.DetailDialogFragment"
         android:label="DetailDialogFragment"
         tools:layout="@layout/fragment_detail_dialog"
         >

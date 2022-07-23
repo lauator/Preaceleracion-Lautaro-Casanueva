@@ -1,5 +1,6 @@
-package com.example.cinemapp.models
+package com.example.cinemapp.data.dto
 
+import com.example.cinemapp.data.dto.Genre
 import com.google.gson.annotations.SerializedName
 
 data class MovieDetail(@SerializedName("title") val title:String,

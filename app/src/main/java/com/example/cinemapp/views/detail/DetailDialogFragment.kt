@@ -1,7 +1,6 @@
-package com.example.cinemapp
+package com.example.cinemapp.views.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,6 @@ import androidx.lifecycle.Observer
 import com.example.cinemapp.databinding.FragmentDetailDialogBinding
 
 
-
-import com.example.cinemapp.viewmodel.DetailViewModel
 import com.squareup.picasso.Picasso
 
 
@@ -43,7 +40,7 @@ class DetailDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val id = arguments?.getSerializable("id") as Int
 
-        detailViewModel.getDetailMovie(id)
+        //detailViewModel.getDetailMovie(id)
 
         binding.apply {
             viewModel = detailViewModel

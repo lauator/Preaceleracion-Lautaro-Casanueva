@@ -1,4 +1,4 @@
-package com.example.cinemapp
+package com.example.cinemapp.views.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,14 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cinemapp.R
 import com.example.cinemapp.databinding.FragmentHomeBinding
-import com.example.cinemapp.models.Movie
-import com.example.cinemapp.models.MovieResponse
-import com.example.cinemapp.viewmodel.HomeViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Response
+import com.example.cinemapp.data.dto.Movie
 
 
 class HomeFragment : Fragment(), HomeListener {
@@ -26,8 +21,11 @@ class HomeFragment : Fragment(), HomeListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var movieAdapter: MovieAdapter
-    private val viewModel: HomeViewModel by viewModels()
-    var page = 1
+    private val viewModel: HomeViewModel by viewModels(
+        factoryProducer = {HomeViewModelFactory()}
+    )
+
+    //var page = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +44,10 @@ class HomeFragment : Fragment(), HomeListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getPopularMovies(1)
+        //viewModel.getPopularMovies(1)
+
+        viewModel.load()
+
 
         movieAdapter = MovieAdapter(this)
 
@@ -60,7 +61,7 @@ class HomeFragment : Fragment(), HomeListener {
 
 
         //paginacion
-        binding.rvMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        /*binding.rvMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
@@ -69,25 +70,24 @@ class HomeFragment : Fragment(), HomeListener {
 
                 val endHasBeenReached = lastVisible + 5 >= totalItemCount
                 if (totalItemCount > 0 && endHasBeenReached) {
-                    page += 1
-                    viewModel.getPopularMovies(page)
+                    //page += 1
+                    //viewModel.getPopularMovies(page)
                 }
             }
-        })
+        })*/
 
 
         observeViewModel()
 
-        
-
-
-
-
     }
 
-    fun observeViewModel() {
+    private fun observeViewModel() {
         viewModel.listMovie.observe(viewLifecycleOwner, Observer<List<Movie>> { movies ->
-            movieAdapter.updateData(movies)
+
+            if(movies != null){
+                movieAdapter.updateData(movies)
+            }
+
         })
 
 

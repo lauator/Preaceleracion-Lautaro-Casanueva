@@ -1,11 +1,12 @@
-package com.example.cinemapp
+package com.example.cinemapp.views.home
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cinemapp.R
 import com.example.cinemapp.databinding.ItemMovieBinding
-import com.example.cinemapp.models.Movie
+import com.example.cinemapp.data.dto.Movie
 import com.squareup.picasso.Picasso
 
 class MovieAdapter(val homeListener: HomeListener): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {

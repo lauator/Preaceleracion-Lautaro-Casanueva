@@ -2,15 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".DetailDialogFragment">
+    tools:context=".views.detail.DetailDialogFragment">
 
     <data>
         <variable
             name="viewModel"
-            type="com.example.cinemapp.viewmodel.DetailViewModel" />
+            type="com.example.cinemapp.views.detail.DetailViewModel" />
         <variable
             name="detailFragment"
-            type="com.example.cinemapp.DetailDialogFragment" />
+            type="com.example.cinemapp.views.detail.DetailDialogFragment" />
 
 
     </data>

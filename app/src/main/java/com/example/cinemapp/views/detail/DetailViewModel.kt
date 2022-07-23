@@ -1,17 +1,14 @@
-package com.example.cinemapp.viewmodel
+package com.example.cinemapp.views.detail
 
-
-import android.util.Log
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.cinemapp.APIService
-import com.example.cinemapp.R
-import com.example.cinemapp.RetrofitMovie
-import com.example.cinemapp.models.Genre
+import com.example.cinemapp.data.movie.APIService
+import com.example.cinemapp.data.RetrofitMovie
+import com.example.cinemapp.data.dto.Genre
 
-import com.example.cinemapp.models.MovieDetail
+import com.example.cinemapp.data.dto.MovieDetail
 import kotlinx.coroutines.CoroutineExceptionHandler
 
 import kotlinx.coroutines.CoroutineScope
@@ -47,7 +44,7 @@ class DetailViewModel : ViewModel() {
     }
 
 
-    fun getDetailMovie(id: Int) {
+    /*fun getDetailMovie(id: Int) {
         CoroutineScope(Dispatchers.IO + coroutineExceptionHandler).launch {
             val call: Response<MovieDetail> =
                 RetrofitMovie.getRetrofit().create(APIService::class.java)
@@ -89,7 +86,7 @@ class DetailViewModel : ViewModel() {
 
 
         }
-    }
+    }*/
 
 
 }
