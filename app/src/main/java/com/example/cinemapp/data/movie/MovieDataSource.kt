@@ -47,7 +47,7 @@ class MovieDataSource {
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 listener.onError(
                     RepositoryError(
-                        message = t.message ?: "Error inesperado",
+                        message = t.message + ". Revise su conexion a internet" ?: "Error inesperado",
                         code = -1,
                         source = Source.REMOTE
                     )
@@ -86,7 +86,7 @@ class MovieDataSource {
             override fun onFailure(call: Call<MovieDetail>, t: Throwable) {
                 listener.onError(
                     RepositoryError(
-                        message = t.message ?: "Error inesperado. Revise su conexion a internet",
+                        message = t.message + ". Revise su conexion a internet" ?: "Error inesperado",
                         code = -1,
                         source = Source.REMOTE
                     )

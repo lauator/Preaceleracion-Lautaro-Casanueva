@@ -44,7 +44,7 @@ class HomeFragment : Fragment(), HomeListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        
+
 
         viewModel.load()
 
@@ -88,6 +88,13 @@ class HomeFragment : Fragment(), HomeListener {
                 movieAdapter.updateData(movies)
             }
 
+        })
+
+        viewModel.error.observe(viewLifecycleOwner, Observer<String>{error ->
+
+            if(error != null){
+                binding.tvError.text = error
+            }
         })
 
 

@@ -62,13 +62,20 @@ class DetailDialogFragment : DialogFragment() {
 
         })
 
-        if(detailViewModel.title.value == null){
+        detailViewModel.error.observe(viewLifecycleOwner, Observer<String>{error ->
+            if(error != null){
+                binding.tvTitle.text = error
+            }
+
+        })
+
+       /* if(detailViewModel.title.value == null){
             binding.tvTitle.text = "There was an error while trying to connect the API, please review your connection to Internet and try again"
         }
 
         if(detailViewModel.title.value != null && detailViewModel.overview.value == null){
             binding.tvOverview.text = "There is not overview for this movie"
-        }
+        }*/
 
 
 
