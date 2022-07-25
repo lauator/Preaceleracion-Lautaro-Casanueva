@@ -2,6 +2,7 @@ package com.example.cinemapp.data.movie
 
 import com.example.cinemapp.data.RetrofitMovie
 import com.example.cinemapp.data.dto.Movie
+import com.example.cinemapp.data.dto.MovieDetail
 
 import com.example.cinemapp.data.dto.MovieResponse
 import com.example.cinemapp.data.utils.RepositoryError
@@ -56,10 +57,44 @@ class MovieDataSource {
 
         })
 
+    }
 
+    fun getDetailsOfMovie(listener: ResponseListener<MovieDetail>, id : Int, apiKey : String ){
+        val service = RetrofitMovie.instance.create(APIService::class.java).getDetailsOfMovie2(id, apiKey)
 
+        service.enqueue(object: Callback<MovieDetail>{
+            override fun onResponse(call: Call<MovieDetail>, response: Response<MovieDetail>) {
+                val activity: MovieDetail? = response.body()
+                if (response.isSuccessful && activity != null) {
+                       listener.onResponse(
+                        RepositoryResponse(
+                            data = activity,
+                            source = Source.REMOTE
+                        )
+                    )
+                } else {
+                    listener.onError(
+                        RepositoryError(
+                            message = "El servidor rechazó la solicitud",
+                            code = response.code(),
+                            source = Source.REMOTE
+                        )
+                    )
+                }
+            }
 
+            override fun onFailure(call: Call<MovieDetail>, t: Throwable) {
+                listener.onError(
+                    RepositoryError(
+                        message = t.message ?: "Error inesperado. Revise su conexion a internet",
+                        code = -1,
+                        source = Source.REMOTE
+                    )
+                )
+            }
 
+        })
 
     }
+
 }

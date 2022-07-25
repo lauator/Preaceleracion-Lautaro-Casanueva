@@ -22,7 +22,7 @@ interface APIService {
     fun getPopularMovies2(@Query("api_key") apiKey : String, @Query("page") page : Int) : Call<MovieResponse>
 
     @GET("{movie_id}")
-    fun getDetails(@Path("movie_id") id : Int, @Query("api_key") apiKey : String) : Call<MovieResponse>
+    fun getDetailsOfMovie2(@Path("movie_id") id : Int, @Query("api_key") apiKey : String) : Call<MovieDetail>
 
 
 }

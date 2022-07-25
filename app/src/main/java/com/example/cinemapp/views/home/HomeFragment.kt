@@ -44,7 +44,7 @@ class HomeFragment : Fragment(), HomeListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //viewModel.getPopularMovies(1)
+        
 
         viewModel.load()
 

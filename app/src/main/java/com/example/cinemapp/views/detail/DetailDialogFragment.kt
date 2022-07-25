@@ -16,7 +16,9 @@ import com.squareup.picasso.Picasso
 class DetailDialogFragment : DialogFragment() {
 
 
-    private val detailViewModel: DetailViewModel by viewModels()
+    private val detailViewModel: DetailViewModel by viewModels(
+        factoryProducer = {DetailViewModelFactory()}
+    )
     private var _binding: FragmentDetailDialogBinding? = null
     private val binding get() = _binding!!
 
@@ -41,6 +43,7 @@ class DetailDialogFragment : DialogFragment() {
         val id = arguments?.getSerializable("id") as Int
 
         //detailViewModel.getDetailMovie(id)
+        detailViewModel.load(id)
 
         binding.apply {
             viewModel = detailViewModel

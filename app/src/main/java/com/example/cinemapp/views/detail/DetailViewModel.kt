@@ -4,11 +4,16 @@ package com.example.cinemapp.views.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.cinemapp.BuildConfig
 import com.example.cinemapp.data.movie.APIService
 import com.example.cinemapp.data.RetrofitMovie
 import com.example.cinemapp.data.dto.Genre
 
 import com.example.cinemapp.data.dto.MovieDetail
+import com.example.cinemapp.data.movie.MovieRepository
+import com.example.cinemapp.data.utils.RepositoryError
+import com.example.cinemapp.data.utils.RepositoryResponse
+import com.example.cinemapp.data.utils.ResponseListener
 import kotlinx.coroutines.CoroutineExceptionHandler
 
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(private val repository: MovieRepository) : ViewModel() {
 
     private val _title = MutableLiveData<String>("")
     val title: LiveData<String> = _title
@@ -39,37 +44,28 @@ class DetailViewModel : ViewModel() {
     private val _overview = MutableLiveData<String>("")
     val overview: LiveData<String> = _overview
 
-    val coroutineExceptionHandler = CoroutineExceptionHandler{_, throwable ->
-        throwable.printStackTrace()
-    }
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String>
+        get() = _error
 
+    fun load(id: Int){
+        _error.value = null
 
-    /*fun getDetailMovie(id: Int) {
-        CoroutineScope(Dispatchers.IO + coroutineExceptionHandler).launch {
-            val call: Response<MovieDetail> =
-                RetrofitMovie.getRetrofit().create(APIService::class.java)
-                    .getDetailsOfMovie("https://api.themoviedb.org/3/movie/$id?api_key=64447ce8fb6641bd74e3c4e5ddda6697&language=en-US")
+        repository.getDetailsOfMovie(listener = object: ResponseListener<MovieDetail>{
+            override fun onResponse(response: RepositoryResponse<MovieDetail>) {
+                _title.value = response.data.title
+                _image.value = "https://image.tmdb.org/t/p/original${response.data.poster_path}"
+                _language.value = response.data.original_language
+                _popularity.value = response.data.popularity
+                _release.value = response.data.release_date
+                _overview.value = response.data.overview
 
-            val response: MovieDetail? = call.body()
+                val genresList: List<Genre> = response.data.genres
 
-
-            if (call.isSuccessful) {
-
-
-
-                _title.postValue(response?.title)
-                _image.postValue("https://image.tmdb.org/t/p/original${response?.poster_path}")
-                _language.postValue(response?.original_language)
-                _popularity.postValue(response?.popularity)
-                _release.postValue(response?.release_date)
-                _overview.postValue(response?.overview)
-
-
-                val genresList: List<Genre> = response?.genres ?: emptyList()
                 var genres = ""
 
                 for (element in genresList) {
-                    genres += if (genresList.last().equals(element)) {
+                    genres += if (genresList.last() == element) {
                         "$element"
                     } else {
                         "${element}, "
@@ -77,16 +73,19 @@ class DetailViewModel : ViewModel() {
 
                 }
 
-
-                _genre.postValue(genres)
-
+                _genre.value = genres
 
 
             }
 
+            override fun onError(error: RepositoryError) {
+                _error.value = error.message
+            }
 
-        }
-    }*/
+        }, id , BuildConfig.API_KEY)
+    }
+
+
 
 
 }
