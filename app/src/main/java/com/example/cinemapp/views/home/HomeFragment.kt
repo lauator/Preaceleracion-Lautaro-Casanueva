@@ -8,24 +8,30 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cinemapp.CinemApp
 import com.example.cinemapp.R
 import com.example.cinemapp.databinding.FragmentHomeBinding
-import com.example.cinemapp.data.dto.Movie
+import com.example.cinemapp.data.model.Movie
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment(), HomeListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var movieAdapter: MovieAdapter
-    private val viewModel: HomeViewModel by viewModels(
+    private val viewModel: HomeViewModel by viewModels()
+    /*(
         factoryProducer = {HomeViewModelFactory()}
-    )
+    )*/
 
-    //var page = 1
+
+    var page = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +55,10 @@ class HomeFragment : Fragment(), HomeListener {
         viewModel.load()
 
 
+
+
+
+
         movieAdapter = MovieAdapter(this)
 
 
@@ -61,7 +71,10 @@ class HomeFragment : Fragment(), HomeListener {
 
 
         //paginacion
-        /*binding.rvMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        //Dejo esta primera aproximacion para resolver la paginacion pero entiendo que hubiera sido mejor utilizar
+        //una libreria especializada para ello
+
+        binding.rvMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
@@ -70,11 +83,11 @@ class HomeFragment : Fragment(), HomeListener {
 
                 val endHasBeenReached = lastVisible + 5 >= totalItemCount
                 if (totalItemCount > 0 && endHasBeenReached) {
-                    //page += 1
-                    //viewModel.getPopularMovies(page)
+                    page += 1
+                    viewModel.load(page = page)
                 }
             }
-        })*/
+        })
 
 
         observeViewModel()

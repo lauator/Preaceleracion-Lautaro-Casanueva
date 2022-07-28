@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemapp.R
 import com.example.cinemapp.databinding.ItemMovieBinding
-import com.example.cinemapp.data.dto.Movie
+import com.example.cinemapp.data.model.Movie
 import com.squareup.picasso.Picasso
 
 class MovieAdapter(val homeListener: HomeListener): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
@@ -19,7 +19,7 @@ class MovieAdapter(val homeListener: HomeListener): RecyclerView.Adapter<MovieAd
 
         fun bind(movie: Movie){
             val query = "https://image.tmdb.org/t/p/original/${movie.poster_path}"
-            Picasso.get().load(query).into(binding.ivMovie)
+            Picasso.get().load(query).fit().into(binding.ivMovie)
             binding.tvTitle.text = movie.title
 
 

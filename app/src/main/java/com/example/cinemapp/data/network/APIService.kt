@@ -1,7 +1,7 @@
-package com.example.cinemapp.data.movie
+package com.example.cinemapp.data.network
 
-import com.example.cinemapp.data.dto.MovieDetail
-import com.example.cinemapp.data.dto.MovieResponse
+import com.example.cinemapp.data.model.MovieDetail
+import com.example.cinemapp.data.model.MovieResponse
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
@@ -10,12 +10,6 @@ import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface APIService {
-
-    @GET
-    suspend fun getPopularMovies(@Url url:String) : Response<MovieResponse>
-
-    @GET
-    suspend fun getDetailsOfMovie(@Url url:String) : Response<MovieDetail>
 
 
     @GET("popular")

@@ -1,6 +1,5 @@
-package com.example.cinemapp.data.dto
+package com.example.cinemapp.data.model
 
-import com.example.cinemapp.data.dto.Movie
 import com.google.gson.annotations.SerializedName
 
 

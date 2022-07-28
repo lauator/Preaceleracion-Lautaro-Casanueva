@@ -11,14 +11,16 @@ import com.example.cinemapp.databinding.FragmentDetailDialogBinding
 
 
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class DetailDialogFragment : DialogFragment() {
 
 
-    private val detailViewModel: DetailViewModel by viewModels(
+    private val detailViewModel: DetailViewModel by viewModels()
+    /*(
         factoryProducer = {DetailViewModelFactory()}
-    )
+    )*/
     private var _binding: FragmentDetailDialogBinding? = null
     private val binding get() = _binding!!
 
@@ -42,7 +44,7 @@ class DetailDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val id = arguments?.getSerializable("id") as Int
 
-        //detailViewModel.getDetailMovie(id)
+
         detailViewModel.load(id)
 
         binding.apply {
@@ -69,13 +71,7 @@ class DetailDialogFragment : DialogFragment() {
 
         })
 
-       /* if(detailViewModel.title.value == null){
-            binding.tvTitle.text = "There was an error while trying to connect the API, please review your connection to Internet and try again"
-        }
 
-        if(detailViewModel.title.value != null && detailViewModel.overview.value == null){
-            binding.tvOverview.text = "There is not overview for this movie"
-        }*/
 
 
 

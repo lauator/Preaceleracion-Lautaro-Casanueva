@@ -1,27 +1,21 @@
 package com.example.cinemapp.views.detail
 
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cinemapp.BuildConfig
-import com.example.cinemapp.data.movie.APIService
-import com.example.cinemapp.data.RetrofitMovie
-import com.example.cinemapp.data.dto.Genre
+import com.example.cinemapp.data.model.Genre
 
-import com.example.cinemapp.data.dto.MovieDetail
-import com.example.cinemapp.data.movie.MovieRepository
+import com.example.cinemapp.data.model.MovieDetail
+import com.example.cinemapp.data.MovieRepository
 import com.example.cinemapp.data.utils.RepositoryError
 import com.example.cinemapp.data.utils.RepositoryResponse
 import com.example.cinemapp.data.utils.ResponseListener
-import kotlinx.coroutines.CoroutineExceptionHandler
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Response
-
-class DetailViewModel(private val repository: MovieRepository) : ViewModel() {
+@HiltViewModel
+class DetailViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
 
     private val _title = MutableLiveData<String>("")
     val title: LiveData<String> = _title

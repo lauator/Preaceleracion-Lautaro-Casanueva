@@ -1,4 +1,4 @@
-package com.example.cinemapp.data.dto
+package com.example.cinemapp.data.model
 
 import com.google.gson.annotations.SerializedName
 

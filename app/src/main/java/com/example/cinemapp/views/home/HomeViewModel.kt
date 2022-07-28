@@ -4,21 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cinemapp.BuildConfig
-import com.example.cinemapp.data.movie.APIService
-import com.example.cinemapp.data.RetrofitMovie
-import com.example.cinemapp.data.dto.Movie
-import com.example.cinemapp.data.dto.MovieResponse
-import com.example.cinemapp.data.movie.MovieRepository
+import com.example.cinemapp.data.model.Movie
+import com.example.cinemapp.data.MovieRepository
 import com.example.cinemapp.data.utils.RepositoryError
 import com.example.cinemapp.data.utils.RepositoryResponse
 import com.example.cinemapp.data.utils.ResponseListener
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Response
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
 
 
     private val _listMovie = MutableLiveData<List<Movie>>()
@@ -31,7 +26,7 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
         get() = _error
 
 
-    fun load(){
+    fun load(page : Int = 1){
         _error.value = null
         _listMovie.value = null
 
@@ -44,7 +39,7 @@ class HomeViewModel(private val repository: MovieRepository) : ViewModel() {
                 _error.value = error.message
 
             }
-        }, BuildConfig.API_KEY, 1 )
+        }, BuildConfig.API_KEY, page )
 
 
     }
