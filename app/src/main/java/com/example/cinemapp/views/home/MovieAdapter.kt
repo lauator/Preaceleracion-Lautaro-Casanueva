@@ -1,14 +1,17 @@
-package com.example.cinemapp
+package com.example.cinemapp.views.home
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cinemapp.R
 import com.example.cinemapp.databinding.ItemMovieBinding
-import com.example.cinemapp.models.Movie
+import com.example.cinemapp.data.model.Movie
 import com.squareup.picasso.Picasso
 
-class MovieAdapter(val movies:List<Movie>): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(val homeListener: HomeListener): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+
+    var movies = ArrayList<Movie>()
 
     inner class MovieViewHolder(view: View): RecyclerView.ViewHolder(view){
 
@@ -16,8 +19,10 @@ class MovieAdapter(val movies:List<Movie>): RecyclerView.Adapter<MovieAdapter.Mo
 
         fun bind(movie: Movie){
             val query = "https://image.tmdb.org/t/p/original/${movie.poster_path}"
-            Picasso.get().load(query).into(binding.ivMovie)
+            Picasso.get().load(query).fit().into(binding.ivMovie)
             binding.tvTitle.text = movie.title
+
+
         }
     }
 
@@ -29,8 +34,19 @@ class MovieAdapter(val movies:List<Movie>): RecyclerView.Adapter<MovieAdapter.Mo
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val item = movies[position]
         holder.bind(item)
+        holder.itemView.setOnClickListener {
+            homeListener.onMovieClicked(item.id)
+
+        }
     }
 
     override fun getItemCount(): Int = movies.size
+
+
+    fun updateData(data: List<Movie>) {
+
+        movies.addAll(data)
+        notifyDataSetChanged()
+    }
 
 }

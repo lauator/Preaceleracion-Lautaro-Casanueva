@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".views.detail.DetailDialogFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.cinemapp.views.detail.DetailViewModel" />
+        <variable
+            name="detailFragment"
+            type="com.example.cinemapp.views.detail.DetailDialogFragment" />
+
+
+    </data>
+
+    <ScrollView
+        android:id="@+id/movieView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+            <ImageView
+                android:id="@+id/ivMovie"
+                android:layout_width="wrap_content"
+                android:layout_height="400dp"
+                android:scaleType="centerCrop"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:textAlignment="center"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivMovie"
+                tools:text="Fantastic Beasts: The Secrets of Dumbledore"
+                android:text="@{viewModel.title}"
+                />
+
+            <TextView
+                android:id="@+id/tvGenre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Genre: Fantasy"
+                android:textSize="18sp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                android:text="@{@string/genre(viewModel.genre)}"
+                />
+
+            <TextView
+                android:id="@+id/tvLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Language: EN"
+                android:textSize="18sp"
+
+                app:layout_constraintTop_toBottomOf="@+id/tvGenre"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@{@string/language(viewModel.language)}"
+
+                />
+
+            <TextView
+                android:id="@+id/tvPopularity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Popularity: 5488.223"
+                android:textSize="18sp"
+
+                app:layout_constraintTop_toBottomOf="@+id/tvLanguage"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@{@string/popularity(viewModel.popularity)}"
+
+                />
+
+            <TextView
+                android:id="@+id/tvRelease"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Release date: 2022-04-06"
+                android:textSize="18sp"
+
+                app:layout_constraintTop_toBottomOf="@+id/tvPopularity"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@{@string/release(viewModel.release)}"
+
+                />
+
+            <TextView
+                android:id="@+id/tvOverview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Overview: Professor Albus Dumbledore knows the powerful, dark wizard Gellert Grindelwald is moving to seize control of the wizarding world. Unable to stop him alone, he entrusts magizoologist Newt Scamander to lead an intrepid team of wizards and witches. They soon encounter an array of old and new beasts as they clash with Grindelwald's growing legion of followers."
+                android:textSize="18sp"
+
+                app:layout_constraintTop_toBottomOf="@+id/tvRelease"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@{@string/overview(viewModel.overview)}"
+
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+
+</layout>
+
