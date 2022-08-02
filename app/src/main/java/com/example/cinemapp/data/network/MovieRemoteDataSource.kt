@@ -17,10 +17,10 @@ import javax.inject.Inject
 
 class MovieRemoteDataSource @Inject constructor(private val api: APIService ) {
 
-    //preguntar si cuando se hace esto no es necesario usar corutinas.
+
     fun getPopularMovies(listener: ResponseListener<List<Movie>>, apiKey : String, page : Int = 1){
 
-        //val service = RetrofitMovie.instance.create(APIService::class.java).getPopularMovies2(apiKey, page)
+
 
         val service = api.getPopularMovies2(apiKey, page)
 
@@ -65,7 +65,7 @@ class MovieRemoteDataSource @Inject constructor(private val api: APIService ) {
 
     fun getDetailsOfMovie(listener: ResponseListener<MovieDetail>, id : Int, apiKey : String ){
 
-        //val service = RetrofitMovie.instance.create(APIService::class.java).getDetailsOfMovie2(id, apiKey)
+
 
         val service = api.getDetailsOfMovie2(id, apiKey)
 

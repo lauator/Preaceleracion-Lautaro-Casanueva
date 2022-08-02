@@ -18,9 +18,7 @@ class DetailDialogFragment : DialogFragment() {
 
 
     private val detailViewModel: DetailViewModel by viewModels()
-    /*(
-        factoryProducer = {DetailViewModelFactory()}
-    )*/
+
     private var _binding: FragmentDetailDialogBinding? = null
     private val binding get() = _binding!!
 

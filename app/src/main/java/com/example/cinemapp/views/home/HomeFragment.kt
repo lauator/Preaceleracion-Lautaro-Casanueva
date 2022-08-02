@@ -26,12 +26,7 @@ class HomeFragment : Fragment(), HomeListener {
     private val binding get() = _binding!!
     private lateinit var movieAdapter: MovieAdapter
     private val viewModel: HomeViewModel by viewModels()
-    /*(
-        factoryProducer = {HomeViewModelFactory()}
-    )*/
 
-
-    var page = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,10 +50,6 @@ class HomeFragment : Fragment(), HomeListener {
         viewModel.load()
 
 
-
-
-
-
         movieAdapter = MovieAdapter(this)
 
 
@@ -70,24 +61,7 @@ class HomeFragment : Fragment(), HomeListener {
         }
 
 
-        //paginacion
-        //Dejo esta primera aproximacion para resolver la paginacion pero entiendo que hubiera sido mejor utilizar
-        //una libreria especializada para ello
 
-        binding.rvMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val totalItemCount = layoutManager?.itemCount
-                val lastVisible = layoutManager.findLastCompletelyVisibleItemPosition()
-
-                val endHasBeenReached = lastVisible + 5 >= totalItemCount
-                if (totalItemCount > 0 && endHasBeenReached) {
-                    page += 1
-                    viewModel.load(page = page)
-                }
-            }
-        })
 
 
         observeViewModel()
